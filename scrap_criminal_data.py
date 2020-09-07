@@ -51,21 +51,28 @@ class CriminalDataScrapper:
 
     def parse_response3(self, response):
         soup = BeautifulSoup(response.content)
-        card = soup.find('tr', {'class': 'gridViewRow'})
-        if card:
-            return {
-                'docket_number': card.find_all('td')[7].text,
-                'court_office': card.find('span', {'id': 'ctl00_ctl00_ctl00_cphMain_cphDynamicContent_cphResults_gvDocket_ctl02_Label1'}).text,
-                'short_caption': card.find('span', {'id': 'ctl00_ctl00_ctl00_cphMain_cphDynamicContent_cphResults_gvDocket_ctl02_Label2'}).text,
-                'filling_date': card.find('span', {'id': 'ctl00_ctl00_ctl00_cphMain_cphDynamicContent_cphResults_gvDocket_ctl02_Label4'}).text,
-                'county': card.find('span', {'id': 'ctl00_ctl00_ctl00_cphMain_cphDynamicContent_cphResults_gvDocket_ctl02_Label3'}).text,
-                'primary_participant': card.find('span', {'id': 'ctl00_ctl00_ctl00_cphMain_cphDynamicContent_cphResults_gvDocket_ctl02_ctl00_ctl00_Label5'}).text,
-                'otn': card.find('span', {'id': 'ctl00_ctl00_ctl00_cphMain_cphDynamicContent_cphResults_gvDocket_ctl02_Label6'}).text,
-                'complaint_number': card.find('span', {'id': 'ctl00_ctl00_ctl00_cphMain_cphDynamicContent_cphResults_gvDocket_ctl02_ctl01_ctl00_Label7'}).text,
-                'dob': soup.find('table', {'id': 'ctl00_ctl00_ctl00_cphMain_cphDynamicContent_cphResults_gvDocket_ctl02_ctl02'}).find('span').text
-            }
-        else:
-            return []
+        records = list()
+        cards = soup.find_all('tr', {'class': 'gridViewRow'})
+        if cards:
+            for card in cards:
+                table_data = card.find_all("td")
+                if table_data:
+                    record = {
+                        "docket_number": table_data[7].text.strip(),
+                        "court_office": table_data[8].text.strip(),
+                        "short_caption": table_data[9].text.strip(),
+                        "filling_date": table_data[10].text.strip(),
+                        "country": table_data[11].text.strip(),
+                        "case_status": table_data[12].text.strip(),
+                        "primary_participant": table_data[13].text.strip(),
+                        "OTN": table_data[15].text.strip(),
+                        "complaint_number": table_data[18].text.strip(),
+                        "police_incident": table_data[18].text.strip(),
+                        "date_of_birth": table_data[19].text.strip()
+                    }
+                    # print(record)
+                    records.append(record)
+        return records
 
     @staticmethod
     def get_payload_1(event_target, view_state, scroll_pos_x, scroll_pos_y, captcha_answer):
