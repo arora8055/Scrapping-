@@ -1,6 +1,6 @@
 import json
 import pytest
-from ./test import CriminalDataScrapper
+from scrap_criminal_data import CriminalDataScrapper
 
 
 def test_scrapper_valid_data():
