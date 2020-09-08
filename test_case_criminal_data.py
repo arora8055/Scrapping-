@@ -4,7 +4,7 @@ from scrap_criminal_data import CriminalDataScrapper
 
 
 def test_scrapper_valid_data():
-    fname, lname, dob = 'Steve', 'Smith', '04/23/2001'
+    fname, lname, dob = 'William', 'Rios', '07/31/1975'
     expected_output = {
         'docket_number': 'MJ-44302-CR-0000159-2019',
         'court_office': 'MDJ-44-3-02',
