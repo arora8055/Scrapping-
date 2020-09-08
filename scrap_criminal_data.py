@@ -136,7 +136,3 @@ if __name__ == "__main__":
     data = scrapper.parse_response3(resp3)
 
     print(data)
-
-
-# I have completed d assignment but mera multiple record vala scenario pending h
-# Apke pass koi ese person ki detail h jiske multiple records ho
