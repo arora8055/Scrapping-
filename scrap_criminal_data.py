@@ -124,7 +124,7 @@ class CriminalDataScrapper:
 
 if __name__ == "__main__":
     scrapper = CriminalDataScrapper(
-        'https://ujsportal.pacourts.us/DocketSheets/MDJ.aspx', 'Steve', 'Smith', '04/23/2001')
+        'https://ujsportal.pacourts.us/DocketSheets/MDJ.aspx', 'William', 'Rios', '07/31/1975')
 
     resp1 = scrapper.make_request1()
     data = scrapper.parse_response1(resp1)
@@ -136,3 +136,7 @@ if __name__ == "__main__":
     data = scrapper.parse_response3(resp3)
 
     print(data)
+
+
+# I have completed d assignment but mera multiple record vala scenario pending h
+# Apke pass koi ese person ki detail h jiske multiple records ho
