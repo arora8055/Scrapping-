@@ -40,9 +40,10 @@ class CriminalDataScrapper:
                              cookies=self.cookies, data=data, verify=False)
 
     def parse_response2(self, response):
-        """Parsing response from POST request and calling get_payload2() for creating FORM DATA"""
+        """Parsing response from first POST request and calling get_payload2() for creating FORM DATA for second POST request"""
         soup = BeautifulSoup(response.content)
-        view_state = soup.find('input', {'name': '__VIEWSTATE'}).attrs['value']
+        view_state = soup.find(
+            'input', {'name': '__VIEWSTATE'}).attrs['value']
         scroll_pos_x = soup.find(
             'input', {'name': '__SCROLLPOSITIONX'}).attrs['value']
         scroll_pos_y = soup.find(
@@ -84,14 +85,17 @@ class CriminalDataScrapper:
 
     def scrap(self):
         """Calling  required methods for scrapping data and returning the required data use by end user"""
-        resp1 = self.make_request1()
-        data = self.parse_response1(resp1)
+        try:
+            resp1 = self.make_request1()
+            data = self.parse_response1(resp1)
 
-        resp2 = self.make_request2(data)
-        data = self.parse_response2(resp2)
+            resp2 = self.make_request2(data)
+            data = self.parse_response2(resp2)
 
-        resp3 = self.make_request3(data)
-        return scrapper.parse_response3(resp3)
+            resp3 = self.make_request3(data)
+            return self.parse_response3(resp3)
+        except BaseException as e:
+            return 'Some issue with the application'
 
     @staticmethod
     def get_payload_1(event_target, view_state, scroll_pos_x, scroll_pos_y, captcha_answer):
